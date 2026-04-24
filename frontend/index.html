@@ -76,7 +76,7 @@
                         </div>
                     </div>
 
-                    <button type="submit">Calcular</button>
+                    <button type="button" id="calculateBtn">Calcular</button>
                 </form>
             </section>
 
@@ -87,6 +87,26 @@
                     <div class="result-box">
                         <span>Estado</span>
                         <strong>Esperando...</strong>
+                    </div>
+                </div>
+            </section>
+
+            <div id="utilidadMensual" class="card">
+                Utilidad mensual: $0
+            </div>
+
+            <div id="totalUtilidad" class="card">
+                Utilidad total: $0
+            </div>
+
+            <section class="card results-card">
+                <h2>Historial de cortes</h2>
+
+                <button type="button" id="loadHistoryBtn">Ver Historial</button>
+
+                <div id="history" class="results-grid">
+                    <div class="result-box">
+                        <strong>Sin datos</strong>
                     </div>
                 </div>
             </section>

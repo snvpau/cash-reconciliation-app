@@ -1,9 +1,20 @@
-from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import Dict
 from fastapi import FastAPI, HTTPException
+from database import create_table, save_corte, get_cortes, get_utilidad_mensual
 
 app = FastAPI()
+
+create_table()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.get("/")
 def home():
@@ -73,7 +84,7 @@ def crear_corte(corte: CorteCaja):
     else:
         mensaje = f"Hay un sobrante de ${abs(diff)} en caja"
 
-    return {
+    resultados = {
         "efectivo_ventas": efectivo_ventas,
         "efectivo_contado": efectivo_contado,
         "efectivo_esperado": efectivo_esperado,
@@ -83,5 +94,16 @@ def crear_corte(corte: CorteCaja):
         "mensaje": mensaje
     }
 
-  
+
+    save_corte(corte, resultados)
+
+    return resultados 
+
+@app.get("/historial")
+def historial():
+    return get_cortes()
+
+@app.get("/utilidad-mensual")
+def utilidad_mensual():
+    return {"total": get_utilidad_mensual()}
 
