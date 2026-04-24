@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CuadraCaja</title>
+    <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+    <div class="app">
+        <header class="header">
+            <img src="logo.png" class="logo-big" />
+            <div>
+                <h1>CORTE DE CAJA</h1>
+                <p>EL GALLO D'ORO</p>
+        </header>
+
+        <main class="dashboard">
+            <section class="card form-card">
+                <form id="cashCutForm">
+                    <div class="grid">
+                        <div class="field">
+                            <label for="fondo_inicial">Fondo inicial</label>
+                            <input type="number" id="fondo_inicial" required />
+                        </div>
+
+                        <div class="field">
+                            <label for="venta_total">Venta total</label>
+                            <input type="number" id="venta_total" required />
+                        </div>
+
+                        <div class="field">
+                            <label for="total_tarjeta">Total tarjeta</label>
+                            <input type="number" id="total_tarjeta" required />
+                        </div>
+
+                        <div class="field">
+                            <label for="otros_ingresos_efectivo">Otros ingresos en efectivo</label>
+                            <input type="number" id="otros_ingresos_efectivo" required />
+                        </div>
+
+                        <div class="field">
+                            <label for="gastos_efectivo">Gastos en efectivo</label>
+                            <input type="number" id="gastos_efectivo" required />
+                        </div>
+
+                        <div class="field">
+                            <label for="gastos_tarjeta">Gastos en tarjeta</label>
+                            <input type="number" id="gastos_tarjeta" required />
+                        </div>
+                    </div>
+
+                    <h3>Denominaciones</h3>
+
+                    <div class="grid">
+                        <div class="field">
+                            <label for="d1000">1000</label>
+                            <input type="number" id="d1000" required />
+                        </div>
+
+                        <div class="field">
+                            <label for="d500">500</label>
+                            <input type="number" id="d500" required />
+                        </div>
+
+                        <div class="field">
+                            <label for="d200">200</label>
+                            <input type="number" id="d200" required />
+                        </div>
+
+                        <div class="field">
+                            <label for="d100">100</label>
+                            <input type="number" id="d100" required />
+                        </div>
+                    </div>
+
+                    <button type="submit">Calcular</button>
+                </form>
+            </section>
+
+            <section class="card results-card">
+                <h2>Resultados</h2>
+
+                <div id="results" class="results-grid">
+                    <div class="result-box">
+                        <span>Estado</span>
+                        <strong>Esperando...</strong>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
