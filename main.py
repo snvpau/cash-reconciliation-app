@@ -2,9 +2,13 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import Dict
 from fastapi import FastAPI, HTTPException
-from database import create_table, save_corte, get_cortes, get_utilidad_mensual
+from database import create_table, save_corte, get_cortes, get_utilidad_mensual, get_total_utilidad
+from fastapi.responses import FileResponse
+from fastapi.staticfiles import StaticFiles
 
 app = FastAPI()
+
+app.mount("/frontend", StaticFiles(directory="frontend"), name="frontend")
 
 create_table()
 
@@ -18,7 +22,7 @@ app.add_middleware(
 
 @app.get("/")
 def home():
-    return {"message" : "Cuadra caja backend funcionando"}
+    return FileResponse("frontend/index.html")
 
 class CorteCaja(BaseModel):
     fondo_inicial: float
@@ -94,10 +98,14 @@ def crear_corte(corte: CorteCaja):
         "mensaje": mensaje
     }
 
+    if estado == "Cuadra":
+        save_corte(corte, resultados)
+        resultados["guardado"] = True
+    else:
+        resultados["guardado"] = False 
+        resultados["mensaje"] += " El corte no se guardará en la base de datos porque no cuadra."
 
-    save_corte(corte, resultados)
-
-    return resultados 
+    return resultados
 
 @app.get("/historial")
 def historial():
@@ -106,4 +114,9 @@ def historial():
 @app.get("/utilidad-mensual")
 def utilidad_mensual():
     return {"total": get_utilidad_mensual()}
+
+@app.get("/total-utilidad")
+def utilidad_total():
+    return {"total": get_total_utilidad()}
+
 

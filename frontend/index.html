@@ -5,16 +5,17 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>CuadraCaja</title>
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="/frontend/styles.css" />
 </head>
 
 <body>
     <div class="app">
         <header class="header">
-            <img src="logo.png" class="logo-big" />
+            <img src="/frontend/logo.png" class="logo-big" />
             <div>
                 <h1>CORTE DE CAJA</h1>
                 <p>EL GALLO D'ORO</p>
+            </div>
         </header>
 
         <main class="dashboard">
@@ -32,7 +33,7 @@
                         </div>
 
                         <div class="field">
-                            <label for="total_tarjeta">Total tarjeta</label>
+                            <label for="total_tarjeta">Venta con tarjeta</label>
                             <input type="number" id="total_tarjeta" required />
                         </div>
 
@@ -74,6 +75,37 @@
                             <label for="d100">100</label>
                             <input type="number" id="d100" required />
                         </div>
+
+                        <div class="field">
+                            <label for="d50">50</label>
+                            <input type="number" id="d50" required />
+                        </div>
+
+                        <div class="field">
+                            <label for="d20">20</label>
+                            <input type="number" id="d20" required />
+                        </div>
+
+                        <div class="field">
+                            <label for="d10">10</label>
+                            <input type="number" id="d10" required />
+                        </div>
+
+                        <div class="field">
+                            <label for="d5">5</label>
+                            <input type="number" id="d5" required />
+                        </div>
+
+                        <div class="field">
+                            <label for="d2">2</label>
+                            <input type="number" id="d2" required />
+                        </div>
+
+                        <div class="field">
+                            <label for="d1">1</label>
+                            <input type="number" id="d1" required />
+                        </div>
+
                     </div>
 
                     <button type="button" id="calculateBtn">Calcular</button>
@@ -113,7 +145,7 @@
         </main>
     </div>
 
-    <script src="script.js"></script>
+    <script src="/frontend/script.js"></script>
 </body>
 
 </html>
