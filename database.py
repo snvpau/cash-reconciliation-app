@@ -39,6 +39,7 @@ def save_corte(corte, resultados):
 
     cursor.execute('''
         INSERT INTO cortes (
+            fecha, 
             fondo_inicial,
             venta_total,
             total_tarjeta,
