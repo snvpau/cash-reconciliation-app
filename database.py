@@ -1,4 +1,6 @@
 import sqlite3
+from datetime import datetime 
+from zoneinfo import ZoneInfo
 
 db_name = "corte_caja.db"
 
@@ -33,6 +35,8 @@ def save_corte(corte, resultados):
     conn = sqlite3.connect(db_name)
     cursor = conn.cursor()
 
+    fecha = datetime.now(ZoneInfo("America/Mexico_City")).strftime("%Y-%m-%d %H:%M:%S")
+
     cursor.execute('''
         INSERT INTO cortes (
             fondo_inicial,
@@ -49,8 +53,9 @@ def save_corte(corte, resultados):
             estado,
             mensaje
         )
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     ''', (
+        fecha,
         corte.fondo_inicial,
         corte.venta_total,
         corte.total_tarjeta,
