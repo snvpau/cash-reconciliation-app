@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const historyButton = document.getElementById("loadHistoryBtn");
 
     function cargarUtilidadMensual() {
-        fetch("http://127.0.0.1:8000/utilidad-mensual")
+        fetch("/utilidad-mensual")
             .then(response => response.json())
             .then(data => {
                 document.getElementById("utilidadMensual").innerText = `Utilidad mensual: $${data.total}`;
@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", function() {
     cargarUtilidadMensual();
 
     function cargarTotalUtilidad() {
-        fetch("http://127.0.0.1:8000/total-utilidad")
+        fetch("/total-utilidad")
             .then(response => response.json())
             .then(data => {
                 document.getElementById("totalUtilidad").innerText = `Utilidad total: $${data.total}`;
@@ -81,7 +81,7 @@ document.addEventListener("DOMContentLoaded", function() {
     return;
     }
     
-    fetch("http://127.0.0.1:8000/corte-caja", {
+    fetch("/corte-caja", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
@@ -140,7 +140,7 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
     historyButton.addEventListener("click", function() {
-        fetch("http://127.0.0.1:8000/historial")
+        fetch("/historial")
         .then(response => response.json())
         .then(data => {
             const history = document.getElementById("history");
