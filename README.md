@@ -1,61 +1,87 @@
-# Cash reconciliaton app
-Cash reconcilation and profit estimation app using FastAPI, design to detect discrepancies in daily cash flow
+# CuadraCaja - Cash Reconciliation App
 
+A full-stack system built to reduce human errors during daily cash cuts in small businesses.
+
+This project was inspired by a real operational problem in a bar in Guadalajara, Mexico.
+
+## Live Demo
+
+https://cash-reconciliation-app.onrender.com
+
+## Problem
+
+Manual cash cuts using Excel or handwritten notes often led to:
+
+- Human input errors.
+- Cash discrepancies.
+- Inaccurate profit calculations.
+- Lack of historical tracking.
+
+## Solution
+
+I built a cash reconciliation app, a web application that:
+
+- Calculates expected cash automatically. 
+- Counts actual cash using bill and coin denominations.
+- Detects shortages or overages.
+- Calculates daily, monthly and total profit.
+- Stores only verified cash cuts (when cash balances correctly).
+- Tracks historical cash cuts.
 
 ## Features
 
-- Receives cash cut data via POST endpoint.
-- Validates input using Pydantic.
-- Identifies mismatches between expected and actual cash.
-- Calculates:
-    - Cash sales.
-    - Expected cash.
-    - Counted cash.
-    - Cash discrepancies.
-    - Estimated profit.
+### Backend
 
-## Use case
+- REST API with FastAPI.
+- Input validation with Pydantic.
+- Business rule validation.
+- Profit calculation logic.
 
-This project was inspired by a real problem needed in a bar from Guadalajara, México to track daily cash flow and detect inconsistencies in cash handling. 
+### Database
+
+- SQLite persistence.
+- Historical records.
+- Monthly profit metrics.
+
+### Frontend
+
+- Built with HTML, CSS, and JavaScript.
+- Dynamic dashboard UI.
+- Mobile-friendly usage.
+
+### Deployment
+
+- Deployed to Render.
+- Accessible from desktop and mobile devices.
 
 ## Stack
 
 - Python.
 - FastAPI.
 - Pydantic.
-- Uvicorn.
+- SQLite.
+- JavaScript.
+- HTML/CSS.
+- Render.
 
-## How to run
+## Architecture
+
+Frontend (HTML/CSS/JavaScript) → FastAPI Backend → SQLite Database → Render Deployment.
+
+## How to Run
 
 ```bash
-pip install fastapi uvicorn
+pip install -r requirements.txt
 uvicorn main:app --reload
+```
 
-then open http://127.0.0.1:8000/docs
 
-Endpoint
+Then open:
 
-POST/corte-caja 
+```text
+http://127.0.0.1:8000
+```
 
-Accepts JSON input with: 
-
-- Sales data.
-- Expenses.
-- Cash denominations.
-
-Returns:
-
-- Expected cash.
-- Counted cash.
-- Discrepancies.
-- Profit estimation.
-
-## Future improvements
-
-- SQLite data base for persistence. 
-- Frontend UI (CSS/HTML/JS).
-- Data visualization with charts.
-- Github Actions CI/CD pipeline.
 
 
 
