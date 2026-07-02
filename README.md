@@ -21,12 +21,11 @@ Manual cash cuts using Excel or handwritten notes often led to:
 
 I built a cash reconciliation app, a web application that:
 
-- Calculates expected cash automatically. 
-- Counts actual cash using bill and coin denominations.
-- Detects shortages or overages.
-- Calculates daily, monthly and total profit.
-- Stores only verified cash cuts (when cash balances correctly).
-- Tracks historical cash cuts.
+- Validates incoming requests using Pydantic.
+- Separates business logic from API routes.
+- Persists validated transactions in SQLite.
+- Exposes REST endpoints using FastAPI.
+- Calculates expected cash and profit based on business rules.
 
 ## Features
 
@@ -66,7 +65,47 @@ I built a cash reconciliation app, a web application that:
 
 ## Architecture
 
-Frontend (HTML/CSS/JavaScript) → FastAPI Backend → SQLite Database → Render Deployment.
+Browser
+     │
+     ▼
+HTML / CSS / JavaScript
+     │
+     ▼
+FastAPI REST API
+     │
+     ▼
+Business Services
+     │
+     ▼
+SQLite Database
+
+## Project Structure
+
+cash-reconciliation-app/
+│
+├── app/
+│   ├── database.py
+│   ├── services.py
+│   ├── models.py
+│   ├── routers/
+│
+├── frontend/
+│
+├── main.py
+│
+└── requirements.txt
+
+## Request Flow
+
+1. User enters cash cut data.
+2. Frontend sends a POST request.
+3. FastAPI validates the request.
+4. Business logic calculates:
+   - Expected cash
+   - Difference
+   - Profit
+5. If the cash balances, the record is stored.
+6. Frontend displays the results.
 
 ## How to Run
 
@@ -82,7 +121,12 @@ Then open:
 http://127.0.0.1:8000
 ```
 
+## Future Improvements
 
+- User authentication
+- Interactive charts
+- Docker deployment
+- Automated testing
 
 
 
