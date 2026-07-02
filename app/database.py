@@ -4,7 +4,6 @@ from app.config import settings
 
 engine = create_engine(
     settings.database_url,
-    connect_args={"check_same_thread": False},  
     pool_pre_ping=True, 
 )
 
@@ -17,8 +16,8 @@ class Base(DeclarativeBase):
 
 def get_db():
     """
-    Dependency de FastAPI: abre una sesión por request y la cierra al terminar,
-    aunque el endpoint lance una excepción
+    Dependency de FastAPI abre una sesión por request y la cierra al terminar aun cuando el endpoint
+    lanza una excepcion. 
     """
     db = SessionLocal()
     try:

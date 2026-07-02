@@ -1,11 +1,11 @@
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
 
     const form = document.getElementById("cashCutForm");
     const button = document.getElementById("calculateBtn");
     const historyButton = document.getElementById("loadHistoryBtn");
 
     function cargarUtilidadMensual() {
-        fetch("/utilidad-mensual")
+        fetch("/api/v1/utilidad-mensual")
             .then(response => response.json())
             .then(data => {
                 document.getElementById("utilidadMensual").innerText = `Utilidad mensual: $${data.total}`;
@@ -18,9 +18,10 @@ document.addEventListener("DOMContentLoaded", function() {
     cargarUtilidadMensual();
 
     function cargarTotalUtilidad() {
-        fetch("/total-utilidad")
+        fetch("/api/v1/utilidad-total")
             .then(response => response.json())
             .then(data => {
+                console.log("total utilidad data:", data);
                 document.getElementById("totalUtilidad").innerText = `Utilidad total: $${data.total}`;
             })
             .catch(error => {
@@ -30,11 +31,11 @@ document.addEventListener("DOMContentLoaded", function() {
 
     cargarTotalUtilidad();
 
-    form.addEventListener("submit", function(event) {
+    form.addEventListener("submit", function (event) {
         event.preventDefault();
     });
 
-    button.addEventListener("click", function() {
+    button.addEventListener("click", function () {
 
         const fondo = Number(document.getElementById("fondo_inicial").value);
         const venta = Number(document.getElementById("venta_total").value);
@@ -64,37 +65,37 @@ document.addEventListener("DOMContentLoaded", function() {
             "5": d5,
             "2": d2,
             "1": d1
-     };
+        };
 
-    const corte = {
-        fondo_inicial: fondo,
-        venta_total: venta,
-        total_tarjeta: tarjeta,
-        otros_ingresos_efectivo: otrosIngresosEfectivo,
-        gastos_efectivo: gastosEfectivo,
-        gastos_tarjeta: gastosTarjeta,
-        denominaciones: denominaciones
-    };
+        const corte = {
+            fondo_inicial: fondo,
+            venta_total: venta,
+            total_tarjeta: tarjeta,
+            otros_ingresos_efectivo: otrosIngresosEfectivo,
+            gastos_efectivo: gastosEfectivo,
+            gastos_tarjeta: gastosTarjeta,
+            denominaciones: denominaciones
+        };
 
-    if (venta < tarjeta) {
-    alert("El total de tarjeta no puede ser mayor a la venta total");
-    return;
-    }
-    
-    fetch("/corte-caja", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(corte)
-    })
-        .then(response => response.json())
-        .then(data => {
-            console.log("Respuesta del backend:", data);
+        if (venta < tarjeta) {
+            alert("El total de tarjeta no puede ser mayor a la venta total");
+            return;
+        }
 
-            const results = document.getElementById("results");
+        fetch("/api/v1/corte-caja", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(corte)
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log("Respuesta del backend:", data);
 
-            results.innerHTML = `
+                const results = document.getElementById("results");
+
+                results.innerHTML = `
                 <div class="result-box">
                     <span>Estado</span>
                     <strong>${data.estado}</strong>
@@ -129,35 +130,35 @@ document.addEventListener("DOMContentLoaded", function() {
                     <span>Guardado en base de datos</span>
                     <strong>${data.guardado ? "Sí" : "No"}</strong>
                 </div>
-            `;  
+            `;
 
-            cargarUtilidadMensual();
-        })
-        .catch(error => {
-            console.error("Error:", error);
-        });
+                cargarUtilidadMensual();
+            })
+            .catch(error => {
+                console.error("Error:", error);
+            });
 
     });
 
-    historyButton.addEventListener("click", function() {
-        fetch("/historial")
-        .then(response => response.json())
-        .then(data => {
-            const history = document.getElementById("history");
+    historyButton.addEventListener("click", function () {
+        fetch("/api/v1/historial")
+            .then(response => response.json())
+            .then(data => {
+                const history = document.getElementById("history");
 
-            if (data.length === 0) {
-                history.innerHTML = `
+                if (data.length === 0) {
+                    history.innerHTML = `
                     <div class="result-box">
                         <span>No hay cortes registrados</span>
                         </div>
-                    `;  
-                return;
-            }
+                    `;
+                    return;
+                }
 
-            let historyHTML = "";
+                let historyHTML = "";
 
-            data.forEach(corte => {
-                historyHTML += `
+                data.forEach(corte => {
+                    historyHTML += `
                     <div class="result-box">
                         <span>${corte.fecha}</span>
                         <strong>${corte.estado}</strong>
@@ -166,13 +167,13 @@ document.addEventListener("DOMContentLoaded", function() {
                         <p>Diferencia: $${corte.diff}</p>
                     </div>
                 `;
-            });
+                });
 
-            history.innerHTML = historyHTML;
-        })
-        .catch(error => {
-            console.error("Error cargando historial:", error);
-        });
+                history.innerHTML = historyHTML;
+            })
+            .catch(error => {
+                console.error("Error cargando historial:", error);
+            });
 
     });
 
