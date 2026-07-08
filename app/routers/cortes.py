@@ -23,7 +23,7 @@ def crear_corte(corte: CorteCajaCreate, db: Session = Depends(get_db)):
         #) from e
 
 @router.get(
-    "/historia",
+    "/historial",
     response_model = list[CorteHistorial],
     summary = "Historial de cortes guardados",
 )

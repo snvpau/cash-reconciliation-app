@@ -5,7 +5,7 @@ client = TestClient(app)
 
 def test_corte():
     response = client.post (
-        "/corte-caja",
+        "/api/v1/corte-caja",
         json = {
             "fondo_inicial" : 1000,
             "venta_total" : 8000,
@@ -30,7 +30,7 @@ def test_corte():
 
 def test_corteinvalido_tarjetamayor():
     response = client.post(
-        "/corte-caja",
+        "/api/v1/corte-caja",
         json={
             "fondo_inicial": 1000,
             "venta_total": 2000,
@@ -44,8 +44,8 @@ def test_corteinvalido_tarjetamayor():
         }
     )
 
-    assert response.status_code == 400
+    assert response.status_code == 422
 
     data = response.json()
-    assert data["detail"] == "Total tarjeta no puede ser mayor que venta total"
+    assert "total tarjeta no puede ser mayor a venta total" in data["detail"][0]["msg"]
     
